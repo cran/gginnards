@@ -2,9 +2,18 @@
 % Please edit documentation in R/data-manip.R
 \name{drop_vars}
 \alias{drop_vars}
-\title{Drop unused variables from data}
+\alias{mapped_vars}
+\alias{data_vars}
+\alias{data_attributes}
+\title{Explore and manipulate the embedded data.}
 \usage{
 drop_vars(p, keep.vars = character(), guess.vars = TRUE)
+
+mapped_vars(p, invert = FALSE)
+
+data_vars(p)
+
+data_attributes(p)
 }
 \arguments{
 \item{p}{ggplot Plot object with embedded data.}
@@ -13,20 +22,35 @@ drop_vars(p, keep.vars = character(), guess.vars = TRUE)
 
 \item{guess.vars}{logical Flag indicating whether to find used variables
 automatically.}
+
+\item{invert}{logical If TRUE return indices for elements of \code{data} that
+are not mapped to any aesthetic or facet.}
+}
+\value{
+character vector with names of mapped variables in the default
+   data object.
+
+character vector with names of all variables in the default
+   data object.
+
+list containing all attributes of the default data object.
 }
 \description{
-Automatically remove unused variables from the data object embedded in a
-\code{gg} or \code{ggplot} object.
+Automatically remove unused variables from the "default" data object embedded
+in a \code{gg} or \code{ggplot} object with \code{drop_vars()}.
 }
 \note{
-This function is under development and not yet thoroughly tested! It is
-  a demonstration of how one can manipulate the internals of \code{ggplot}
-  objects. This function may stop working after some future update to the
-  'ggplot2' package.
+These functions are under development and not yet thoroughly tested!
+  They are a demonstration of how one can manipulate the internals of
+  \code{ggplot} objects in 'ggplot2' version 3.1.0. These functions may stop
+  working after some future update to the 'ggplot2' package. Although I will
+  maintain this package for use in some of my other packages, there is no
+  guarantee that I will be able to achieve this transparently.
 
-  Rather than using this function after creating the \code{ggplot} object it
-  may be more efficient to extract the variables of interest and pass a data
-  frame containing only these to the \code{ggplot()} constructor.
+  Obviously, rather than using function \code{drop_vars()} after creating the
+  \code{ggplot} object it is usually more efficient to select the variables of
+  interest and pass a data frame containing only these to the \code{ggplot()}
+  constructor.
 }
 \section{Warning!}{
  The current implementation drops variables only from the
@@ -39,15 +63,34 @@ library(ggplot2)
 p <- ggplot(mpg, aes(factor(year), (cty + hwy) / 2)) +
   geom_boxplot() +
   facet_grid(. ~ class)
-p
 
-p.dp <- drop_vars(p)
+mapped_vars(p) # those in use
+mapped_vars(p, invert = TRUE) # those not used
+
+p.dp <- drop_vars(p) # we drop unused vars
+
+# number of columns in the data member
+ncol(p$data)
+ncol(p.dp$data)
+
+# which vars are in the data member
+data_vars(p)
+data_vars(p.dp)
+
+# which variables in data are used in the plot
+mapped_vars(p)
+mapped_vars(p.dp)
+
+# the plots identical
+p
 p.dp
 
-object.size(p)
-object.size(p.dp)
+# structure and size of p
+str(p, max.level = 0)
+str(p.dp, max.level = 0) # smaller in size
 
-names(p$data)
-names(p.dp$data)
+# structure and size of p["data"]
+str(p, components = "data")
+str(p.dp, components = "data") # smaller in size
 
 }

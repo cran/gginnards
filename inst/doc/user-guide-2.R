@@ -1,6 +1,6 @@
 ## ---- include=FALSE, echo=FALSE------------------------------------------
 library(knitr)
-opts_chunk$set(fig.path = 'figure2/', fig.align = 'center', 
+opts_chunk$set(fig.align = 'center', 
                fig.show = 'hold', fig.width = 7, fig.height = 4)
 options(warnPartialMatchArgs = FALSE)
 
@@ -20,6 +20,10 @@ my.data <- data.frame(
   y = rnorm(40),
   unused = "garbage"
 )
+
+## ------------------------------------------------------------------------
+attr(my.data, "my.atr.char") <- "my.atr.value"
+attr(my.data, "my.atr.num") <- 12345678
 
 ## ------------------------------------------------------------------------
 old_theme <- theme_set(theme_bw())
@@ -85,11 +89,25 @@ p1
 ## ------------------------------------------------------------------------
 delete_layers(p1, "GeomText")
 
+## ------------------------------------------------------------------------
+num_layers(p)
+num_layers(p %+% geom_point(colour = "blue"))
+num_layers(p + geom_point(colour = "blue"))
+
+## ------------------------------------------------------------------------
+p1 <- p + theme_bw()
+p1
+p1 + theme_void()
+p1 %+% theme_void()
+
 ## ----eval=FALSE----------------------------------------------------------
 #  summary(theme_bw())
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  str(theme_bw())
+#  names(theme_bw())
+
+## ---- eval=FALSE---------------------------------------------------------
+#  str(theme_bw()$text)
 
 ## ------------------------------------------------------------------------
 mapped.vars <- 
@@ -124,4 +142,20 @@ p1
 
 ## ------------------------------------------------------------------------
 drop_vars(p)
+
+## ------------------------------------------------------------------------
+pryr::address(my.data)
+z <- p$data
+pryr::address(z)
+
+## ------------------------------------------------------------------------
+attr(my.data, "my.atr.num") <- 1324567
+pryr::address(z)
+pryr::address(my.data)
+
+## ------------------------------------------------------------------------
+data_attributes(p)
+
+## ------------------------------------------------------------------------
+p + geom_debug(summary.fun = attributes)
 

@@ -1,8 +1,8 @@
 Package: gginnards
 Type: Package
 Title: Explore the Innards of 'ggplot2' Objects
-Version: 0.0.2
-Date: 2019-02-23
+Version: 0.0.3
+Date: 2019-11-26
 Authors@R: 
     c(
     person("Pedro J.", "Aphalo", email = "pedro.aphalo@helsinki.fi", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3385-972X"))    )
@@ -17,19 +17,19 @@ License: GPL (>= 2)
 LazyData: TRUE
 LazyLoad: TRUE
 ByteCompile: TRUE
-Depends: R (>= 3.4.0), ggplot2 (>= 3.1.0)
-Imports: utils, methods, rlang (>= 0.3.1), stringr (>= 1.4.0), magrittr
-        (>= 1.5), tibble (>= 2.0.1)
-Suggests: dplyr (>= 0.8.0.1), knitr (>= 1.21), rmarkdown (>= 1.11),
-        pryr (>= 0.1.4)
+Depends: R (>= 3.5.0), ggplot2 (>= 3.2.1)
+Imports: utils, methods, rlang (>= 0.4.0), stringr (>= 1.4.0), magrittr
+        (>= 1.5), tibble (>= 2.1.0)
+Suggests: dplyr (>= 0.8.1), knitr (>= 1.24), rmarkdown (>= 1.14), pryr
+        (>= 0.1.4)
 URL: https://www.r4photobiology.info,
         https://bitbucket.org/aphalo/gginnards
 BugReports: https://bitbucket.org/aphalo/gginnards/issues
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-03-24 22:31:46 UTC; aphalo
+Packaged: 2019-11-26 20:32:14 UTC; aphalo
 Author: Pedro J. Aphalo [aut, cre] (<https://orcid.org/0000-0003-3385-972X>)
 Repository: CRAN
-Date/Publication: 2019-03-25 08:50:14 UTC
+Date/Publication: 2019-11-26 21:00:02 UTC

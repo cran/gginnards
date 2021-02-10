@@ -1,10 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gginnards
+# gginnards <img src="man/figures/logo-gginnards.png" align="right" width="150" />
 
 [![cran
 version](https://www.r-pkg.org/badges/version/gginnards)](https://cran.r-project.org/package=gginnards)
+[![R build
+status](https://github.com/aphalo/gginnards/workflows/R-CMD-check/badge.svg)](https://github.com/aphalo/gginnards/actions)
 
 ## Purpose
 
@@ -116,12 +118,12 @@ ggplot(mtcars, aes(cyl, mpg, colour = factor(cyl))) +
 
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
-    #> # A tibble: 3 x 7
-    #>   colour      x group     y  ymin  ymax PANEL
-    #>   <chr>   <dbl> <int> <dbl> <dbl> <dbl> <fct>
-    #> 1 #F8766D     4     1  26.7  24.1  29.3 1    
-    #> 2 #00BA38     6     2  19.7  18.7  20.7 1    
-    #> 3 #619CFF     8     3  15.1  13.7  16.4 1
+    #> # A tibble: 3 x 8
+    #>   colour      x group     y  ymin  ymax PANEL flipped_aes
+    #>   <chr>   <dbl> <int> <dbl> <dbl> <dbl> <fct> <lgl>      
+    #> 1 #F8766D     4     1  26.7  24.1  29.2 1     FALSE      
+    #> 2 #00BA38     6     2  19.7  18.8  20.7 1     FALSE      
+    #> 3 #619CFF     8     3  15.1  13.9  16.4 1     FALSE
 
 We print to the R console `data` as *seen* as input by statistics that
 use a *panel function*.
@@ -185,11 +187,11 @@ Installation of the most recent stable version from CRAN:
 install.packages("gginnards")
 ```
 
-Installation of the current unstable version from Bitbucket:
+Installation of the current unstable version from GitHub:
 
 ``` r
 # install.packages("devtools")
-devtools::install_bitbucket("aphalo/gginnards")
+devtools::install_github("aphalo/gginnards")
 ```
 
 ## Documentation
@@ -204,8 +206,8 @@ News about updates are regularly posted at
 ## Contributing
 
 Please report bugs and request new features at
-(<https://bitbucket.org/aphalo/gginnards/issues>). Pull requests are
-welcome at (<https://bitbucket.org/aphalo/gginnards>).
+(<https://github.com/aphalo/gginnards/issues>). Pull requests are
+welcome at (<https://github.com/aphalo/gginnards>).
 
 ## Citation
 
@@ -217,22 +219,22 @@ citation("gginnards")
 #> 
 #> To cite package 'gginnards' in publications use:
 #> 
-#>   Pedro J. Aphalo (2019). gginnards: Explore the Innards of 'ggplot2'
+#>   Pedro J. Aphalo (2021). gginnards: Explore the Innards of 'ggplot2'
 #>   Objects. https://www.r4photobiology.info,
-#>   https://bitbucket.org/aphalo/gginnards.
+#>   https://github.com/aphalo/gginnards.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {gginnards: Explore the Innards of 'ggplot2' Objects},
 #>     author = {Pedro J. Aphalo},
-#>     year = {2019},
-#>     note = {https://www.r4photobiology.info, https://bitbucket.org/aphalo/gginnards},
+#>     year = {2021},
+#>     note = {https://www.r4photobiology.info, https://github.com/aphalo/gginnards},
 #>   }
 ```
 
 ## License
 
-© 2016-2019 Pedro J. Aphalo (<pedro.aphalo@helsinki.fi>). Released under
+© 2016-2021 Pedro J. Aphalo (<pedro.aphalo@helsinki.fi>). Released under
 the GPL, version 2 or greater. This software carries no warranty of any
 kind.

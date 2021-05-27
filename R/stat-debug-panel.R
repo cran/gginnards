@@ -41,8 +41,12 @@
 #'   \item{PANEL}{all distinct values in PANEL as passed in \code{data} object}
 #'   }
 #'
+#' @return A plot layer instance.
+#'
+#' @return A plot layer instance. Mainly used for the side-effect of printing
+#'   to the console the \code{data} object.
+#'
 #' @examples
-#' library(ggplot2)
 #' my.df <- data.frame(x = rep(1:10, 2),
 #'                     y = rep(c(1,2), c(10,10)),
 #'                     group = rep(c("A","B"), c(10,10)))
@@ -50,6 +54,10 @@
 #' ggplot(my.df, aes(x,y)) +
 #'   geom_point() +
 #'   stat_debug_panel()
+#'
+#' ggplot(my.df, aes(x,y)) +
+#'   geom_point() +
+#'   stat_debug_panel(summary.fun = nrow)
 #'
 #' ggplot(my.df, aes(x,y, colour = group)) +
 #'   geom_point() +
@@ -64,13 +72,24 @@
 #' @family diagnosis functions
 #'
 stat_debug_panel <-
-  function(mapping = NULL, data = NULL, geom = "null",
-           summary.fun = tibble::as_tibble, summary.fun.args = list(),
-           position = "identity", na.rm = FALSE, show.legend = FALSE,
-           inherit.aes = TRUE, ...) {
+  function(mapping = NULL,
+           data = NULL,
+           geom = "debug",
+           summary.fun = head,
+           summary.fun.args = list(),
+           position = "identity",
+           na.rm = FALSE,
+           show.legend = FALSE,
+           inherit.aes = TRUE,
+           ...) {
     ggplot2::layer(
-    stat = StatDebugPanel, data = data, mapping = mapping, geom = geom,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    stat = StatDebugPanel,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(na.rm = na.rm,
                   summary.fun = summary.fun,
                   summary.fun.args = summary.fun.args,
@@ -87,34 +106,28 @@ StatDebugPanel <-
     "StatDebugPanel",
     ggplot2::Stat,
     compute_panel =
-      function(data, scales, summary.fun, summary.fun.args) {
-        force(data)
+      function(data, scales,
+               summary.fun = head,
+               summary.fun.args = list()) {
         if (!is.null(summary.fun)) {
-          data.summary <-  do.call(summary.fun,
-                                   c(quote(data), summary.fun.args))
-          print("Input 'data' to 'compute_panel()':")
-          print(data.summary)
+          z <-  do.call(summary.fun, c(quote(data), summary.fun.args))
+        } else {
+          z <- data
         }
-        my.diagnostic <-
-          data.frame(x = mean(range(data$x)),
-                     y = mean(range(data$y)),
-                     nrow = nrow(data),
-                     ncol = ncol(data),
-                     colnames = paste(colnames(data), collapse = ", "),
-                     colclasses = paste("x: ", class(data$x),
-                                        "; y: ",  class(data$y),
-                                        collapse = ", ", sep = ""),
-                     group = paste(unique(data$group), collapse = ", "),
-                     PANEL = paste(unique(data$PANEL), collapse = ", "))
-        my.diagnostic
+        cat("Input 'data' to 'compute_group()':\n")
+        print(z)
+        if (is.data.frame(z) && nrow(data) > nrow(z)) {
+          cat("...\n")
+        }
+        cat("\n")
+        tibble::tibble(x = mean(range(data$x)),
+                       y = mean(range(data$y)),
+                       nrow = nrow(data),
+                       ncol = ncol(data),
+                       colnames = list(colnames(data)),
+                       class.x = class(data$x),
+                       class.y = class(data$y),
+                       groups = list(unique(data$group)))
       },
-    default_aes = ggplot2::aes(label = paste("groups: ", stat(group), "; ",
-                                             "PANEL: ", stat(PANEL), "\n",
-                                             "nrow: ", stat(nrow), "; ",
-                                             "ncol: ", stat(ncol), "\n",
-                                             "cols: ", stat(colnames), "\n",
-                                             "classes: ", stat(colclasses),
-                                             sep = "")
-    ),
     required_aes = c("x", "y")
   )

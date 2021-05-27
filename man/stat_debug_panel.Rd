@@ -7,8 +7,8 @@
 stat_debug_panel(
   mapping = NULL,
   data = NULL,
-  geom = "null",
-  summary.fun = tibble::as_tibble,
+  geom = "debug",
+  summary.fun = head,
   summary.fun.args = list(),
   position = "identity",
   na.rm = FALSE,
@@ -51,6 +51,12 @@ default plot specification, e.g. \code{\link[ggplot2]{borders}}.}
 can include aesthetics whose values you want to set, not map. See
 \code{\link[ggplot2]{layer}} for more details.}
 }
+\value{
+A plot layer instance.
+
+A plot layer instance. Mainly used for the side-effect of printing
+  to the console the \code{data} object.
+}
 \description{
 \code{stat_debug} reports all distinct values in \code{group}
   and \code{PANEL}, and \code{nrow}, \code{ncol} and the names of the columns
@@ -72,7 +78,6 @@ can include aesthetics whose values you want to set, not map. See
 }
 
 \examples{
-library(ggplot2)
 my.df <- data.frame(x = rep(1:10, 2),
                     y = rep(c(1,2), c(10,10)),
                     group = rep(c("A","B"), c(10,10)))
@@ -80,6 +85,10 @@ my.df <- data.frame(x = rep(1:10, 2),
 ggplot(my.df, aes(x,y)) +
   geom_point() +
   stat_debug_panel()
+
+ggplot(my.df, aes(x,y)) +
+  geom_point() +
+  stat_debug_panel(summary.fun = nrow)
 
 ggplot(my.df, aes(x,y, colour = group)) +
   geom_point() +

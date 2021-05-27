@@ -75,15 +75,16 @@ ggplot(mpg, aes(cyl, hwy, colour = factor(cyl))) +
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
   stat_smooth(method = "lm", formula = y ~ poly(x, 2)) +
-  stat_smooth(method = "lm", formula = y ~ poly(x, 2), geom = "debug")
+  stat_smooth(method = "lm", formula = y ~ poly(x, 2), 
+              geom = "debug", summary.fun = head)
 
 ## -----------------------------------------------------------------------------
-ggplot(my.data, aes(x, y, colour = group)) + 
+ggplot(my.data, aes(x, y)) + 
   geom_null()
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
-  stat_debug_group()
+  stat_debug_group(geom = "null")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
@@ -125,29 +126,17 @@ ggplot(my.data, aes(x, y, colour = group)) +
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, shape = group)) + 
   geom_point() + 
-  stat_debug_group(geom = "label", vjust = c(-0.5,1.5))
-
-## -----------------------------------------------------------------------------
-ggplot(my.data, aes(x, y, colour = group)) + 
-  geom_point() + 
-  stat_debug_panel(geom = "label", aes(label = stat(paste("PANEL: ", PANEL)))) +
-  facet_wrap(~block)
+  stat_debug_group(geom = "debug")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, shape = group)) + 
   geom_point() + 
-  stat_debug_group(geom = "debug")
+  stat_debug_panel(geom = "debug")
 
 ## -----------------------------------------------------------------------------
-pipe_assign <- function(value, name, pos = .GlobalEnv, ...) {
-  assign(x = name, value = value, inherits = FALSE, pos = pos, ...)
-}
-
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
-  geom_debug(summary.fun = pipe_assign, 
-             summary.fun.args = list(name = "debug_data"),
-             print.fun = NULL)
-
-head(debug_data)
+  stat_debug_group(geom = "text",
+                   mapping = aes(label = sprintf("group = %i", 
+                                                 after_stat(group))))
 

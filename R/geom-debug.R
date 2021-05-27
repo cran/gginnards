@@ -35,11 +35,14 @@
 #'   layer, for example you override the default \code{stat} associated with the
 #'   layer. \item Other arguments passed on to the stat.}
 #'
-#' @note This _geom_ is very unusual in that it does not produce visible graphic
+#' @note This geom is very unusual in that it does not produce visible graphic
 #'   output. It only returns a \code{\link[grid]{grid.null}} grob (graphical
 #'   object). However, it accepts for consistency all the same parameters as
 #'   normal geoms, which have no effect on the graphical output, except for
 #'   \code{show.legend}.
+#'
+#' @return A plot layer instance. Mainly used for the side-effect of printing
+#'   to the console the \code{data} object.
 #'
 #' @export
 #'
@@ -110,14 +113,10 @@ GeomNull <-
 #'   \code{mapping} if there isn't a mapping defined for the plot.
 #' @param data A data frame. If specified, overrides the default data frame
 #'   defined at the top level of the plot.
-#' @param summary.fun A function used to print the \code{data} object received
-#'   as input.
-#' @param summary.fun.args A list of additional arguments to be passed to
-#'   \code{summary.fun}.
-#' @param print.fun A function used to print the value returned by
-#'   \code{summary.fun}.
-#' @param print.fun.args A list of additional arguments to be passed to
-#'   \code{print.fun}.
+#' @param summary.fun A function used to print the \code{data}
+#'   object received as input.
+#' @param summary.fun.args A list of additional arguments
+#'   to be passed to \code{summary.fun}.
 #' @param position Position adjustment, either as a string, or the result of a
 #'   call to a position adjustment function.
 #' @param stat The statistical transformation to use on the data for this layer,
@@ -138,8 +137,13 @@ GeomNull <-
 #'   \code{color = "red"} or \code{size = 3}. \item Other arguments to the
 #'   layer, for example you override the default \code{stat} associated with the
 #'   layer. \item Other arguments passed on to the stat. }
-#' @note This _geom_ is very unusual in that it does not produce visible graphic
-#'   output. It only returns a \code{grid.null()} grob (graphical object).
+#' @return This _geom_ is very unusual in that it does not produce visible graphic
+#'   output. It only returns a \code{grid.null()} grob (graphical object). It
+#'   passes its input as argument to the first parameter of the function
+#'   passed as argument to `geom.summary.function`. This by default is the
+#'   argument passed to `summary.fun`.
+#'
+#' @importFrom utils head
 #' @export
 #'
 #' @examples
@@ -147,6 +151,18 @@ GeomNull <-
 #' ggplot(mtcars, aes(cyl, mpg, color = factor(cyl))) +
 #'   geom_point() +
 #'   geom_debug()
+#'
+#' ggplot(mtcars, aes(cyl, mpg, color = factor(cyl))) +
+#'   geom_point() +
+#'   geom_debug(summary.fun = head, summary.fun.args = list(n = 3))
+#'
+#' ggplot(mtcars, aes(cyl, mpg, color = factor(cyl))) +
+#'   geom_point() +
+#'   geom_debug(summary.fun = nrow)
+#'
+#' ggplot(mtcars, aes(cyl, mpg, color = factor(cyl))) +
+#'   geom_point() +
+#'   geom_debug(summary.fun = attributes)
 #'
 #' # echo to the R console \code{data} as received by geoms
 #' ggplot(mtcars, aes(cyl, mpg, colour = factor(cyl))) +
@@ -160,26 +176,33 @@ GeomNull <-
 #'   geom_sf(color = "darkblue", fill = "white") +
 #'   geom_debug()
 #'
-geom_debug <- function(mapping = NULL, data = NULL, stat = "identity",
-                       summary.fun = tibble::as_tibble,
+geom_debug <- function(mapping = NULL,
+                       data = NULL,
+                       stat = "identity",
+                       summary.fun = head,
                        summary.fun.args = list(),
-                       print.fun = print,
-                       print.fun.args = list(),
                        position = "identity", na.rm = FALSE,
                        show.legend = FALSE,
-                       inherit.aes = TRUE, ...) {
-  force(summary.fun)
+                       inherit.aes = TRUE,
+                       ...) {
   ggplot2::layer(
-    geom = GeomDebug, mapping = mapping,  data = data, stat = stat,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    geom = GeomDebug,
+    mapping = mapping,
+    data = data,
+    stat = stat,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(na.rm = na.rm,
                   summary.fun = summary.fun,
                   summary.fun.args = summary.fun.args,
-                  print.fun = print.fun,
-                  print.fun.args = print.fun.args,
                   ...)
   )
 }
+
+#' @rdname geom_debug
+#' @export
+geom_debug_npc <- geom_debug
 
 #' @rdname gginnards-ggproto
 #' @format NULL
@@ -187,25 +210,23 @@ geom_debug <- function(mapping = NULL, data = NULL, stat = "identity",
 #' @export
 GeomDebug <-
   ggplot2::ggproto("GeomDebug", ggplot2::Geom,
-                   draw_key = function(...) {
-                     grid::nullGrob()
-                     },
                    draw_panel = function(data, panel_scales, coord,
-                                         summary.fun = tibble::as_tibble,
-                                         summary.fun.args = list(),
-                                         print.fun = print,
-                                         print.fun.args = list()) {
+                                         summary.fun = head,
+                                         summary.fun.args = list()) {
                      if (!is.null(summary.fun)) {
-                       z <- do.call(summary.fun,
-                                    c(quote(data), summary.fun.args))
+                       z <-  do.call(summary.fun, c(quote(data), summary.fun.args))
                      } else {
                        z <- data
                      }
-                     if (!is.null(print.fun)) {
-                       do.call(print.fun, c(quote(z), print.fun.args))
+                     cat("Input 'data' to 'draw_panel()':\n")
+                     print(z)
+                     if (is.data.frame(z) && nrow(data) > nrow(z)) {
+                       cat("...\n")
                      }
-
-                   grid::nullGrob()
-
+                     cat("\n")
+                     grid::nullGrob()
+                   },
+                   draw_key = function(...) {
+                     grid::nullGrob()
                    }
   )

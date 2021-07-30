@@ -10,6 +10,7 @@ library(gginnards)
 library(tibble)
 library(magrittr)
 library(stringr)
+eval_pryr <- requireNamespace("pryr", quietly = TRUE)
 
 ## -----------------------------------------------------------------------------
 set.seed(4321)
@@ -31,8 +32,9 @@ old_theme <- theme_set(theme_bw())
 ## -----------------------------------------------------------------------------
 p <- ggplot(my.data, aes(group, y)) + 
   geom_point() +
-  stat_summary(fun.data = mean_se, colour = "cornflowerblue", size = 1.3) +
-  facet_wrap(~panel, scales = "free_x", labeller = label_both)
+  stat_summary(fun.data = mean_se, colour = "cornflowerblue", size = 1) +
+  facet_wrap(~panel, scales = "free_x", labeller = label_both) +
+  expand_limits(y = c(-2, 2))
 p
 
 ## -----------------------------------------------------------------------------
@@ -145,12 +147,12 @@ p1
 ## -----------------------------------------------------------------------------
 drop_vars(p)
 
-## -----------------------------------------------------------------------------
+## ---- eval = eval_pryr--------------------------------------------------------
 pryr::address(my.data)
 z <- p$data
 pryr::address(z)
 
-## -----------------------------------------------------------------------------
+## ---- eval = eval_pryr--------------------------------------------------------
 attr(my.data, "my.atr.num") <- 1324567
 pryr::address(z)
 pryr::address(my.data)

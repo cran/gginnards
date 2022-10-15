@@ -4,10 +4,25 @@ editor_options:
     wrap: 72
 ---
 
+# gginnards 0.1.1
+
+-   Update `geom_debug()` to avoid several spurious warnings triggered by
+    unrecognized parameters and aesthetics. Aesthetics silently accepted
+    include all those used by geoms from packages 'ggplot2', 'ggpp', and
+    'ggrepel'.
+    
+-   Improve the printed output from `geom_debug()`, `stat_debug_group()`
+    and `stat_debug_panel()`.
+    
+-   Change the default geom of `stat_debug_group()` and `stat_debug_panel()`
+    from `"debug"` to `"null"`.    
+
+-   Tested working with 'ggplot2' 3.3.6 and upcoming 'ggplot2' 3.4.0 (v3.4.0-rc).
+
 # gginnards 0.1.0-1
 
 -   Minor update to *User Guide 2* and four code examples in functions'
-    documenttaion to address non-compliance with CRAN requirements.
+    documentation to address non-compliance with CRAN requirements.
 
 -   Minor update to *User Guide 2* figures to enhance clarity.
 

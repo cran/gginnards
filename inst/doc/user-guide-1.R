@@ -67,7 +67,7 @@ ggplot(my.data, aes(x, y, colour = group)) +
   geom_debug(summary.fun = head, summary.fun.args = list(n = 3))
 
 ## -----------------------------------------------------------------------------
-ggplot(mpg, aes(cyl, hwy, colour = factor(cyl))) +
+ggplot(mpg, aes(cyl, hwy)) +
   stat_summary(fun.data = "mean_se") +
   stat_summary(fun.data = "mean_se", geom = "debug") 
 
@@ -84,12 +84,12 @@ ggplot(my.data, aes(x, y)) +
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
-  stat_debug_group(geom = "null")
+  stat_debug_group()
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
   geom_point() + 
-  stat_debug_group()
+  stat_debug_group(geom = "debug")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
@@ -114,7 +114,7 @@ ggplot(my.data, aes(x, y, shape = group)) +
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
-  stat_debug_panel(summary.fun = nrow) +
+  stat_debug_panel(summary.fun = "nrow") +
   facet_wrap(~block)
 
 ## -----------------------------------------------------------------------------
@@ -138,5 +138,6 @@ ggplot(my.data, aes(x, y, colour = group)) +
   geom_point() + 
   stat_debug_group(geom = "text",
                    mapping = aes(label = sprintf("group = %i", 
-                                                 after_stat(group))))
+                                                 after_stat(group))),
+                   summary.fun = function(x) {NULL})
 

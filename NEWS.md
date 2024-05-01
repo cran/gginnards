@@ -4,6 +4,35 @@ editor_options:
     wrap: 72
 ---
 
+# gginnards 0.2.0
+
+**This is a code breaking update in relation to functions
+`stat_debug_group()` and `stat_debug_panel()`. Both the function signature,
+returned values and default arguments have changed.** The new and updated
+functions are more polished and flexible than they were in earlier versions of
+the package but can still be made to produce similar, but not identical, output
+to functions of the same names from earlier versions.
+
+-   Function `geom_debug()` maintained for backwards compatibility.
+
+-   Functions `geom_debug_panel()` and `geom_debug_group()` print summaries of
+both `data` and `params` objects.
+
+-   In functions `geom_debug_panel()`, `geom_debug_group()`,
+`stat_debug_panel()` and `stat_debug_group()` the function used to print the
+summaries is an argument to a new formal parameter `dbgfun.print`.
+
+-   Update `stat_debug_group()` and `stat_debug_panel()` so
+that the function used to compute the value returned as `data` is an argument to
+a new formal parameter `fun.data`.
+
+-   Rename formal parameter `summary.fun` into `dbgfun.data` in
+`geom_debug_panel()`, `geom_debug_group()`, `stat_debug_group()` and
+`stat_debug_panel()`.
+
+-   Update the `optional_aes` in `geom_debug_panel()`, `geom_debug_group()` and
+`geom_null()` to track changes in `ggplot2` and `ggpp`.
+
 # gginnards 0.1.2
 
 -   Fix bug in `drop_vars()` (report and fix by struckma in issue [#1](https://github.com/aphalo/gginnards/issues/1)).

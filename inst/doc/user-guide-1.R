@@ -1,4 +1,4 @@
-## ---- include=FALSE, echo=FALSE-----------------------------------------------
+## ----include=FALSE, echo=FALSE------------------------------------------------
 library(knitr)
 opts_chunk$set(fig.align = 'center', 
                fig.show = 'hold', fig.width = 7, fig.height = 4)
@@ -59,24 +59,24 @@ str(p3, max.level = 2, components = "theme")
 ## -----------------------------------------------------------------------------
 ggplot(mpg, aes(cyl, hwy, colour = factor(cyl))) + 
   geom_point() +
-  geom_debug()
+  geom_debug_panel()
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
-  geom_debug(summary.fun = head, summary.fun.args = list(n = 3))
+  geom_debug_panel(dbgfun.data = head, dbgfun.data.args = list(n = 3))
 
 ## -----------------------------------------------------------------------------
 ggplot(mpg, aes(cyl, hwy)) +
   stat_summary(fun.data = "mean_se") +
-  stat_summary(fun.data = "mean_se", geom = "debug") 
+  stat_summary(fun.data = "mean_se", geom = "debug_panel") 
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
   stat_smooth(method = "lm", formula = y ~ poly(x, 2)) +
   stat_smooth(method = "lm", formula = y ~ poly(x, 2), 
-              geom = "debug", summary.fun = head)
+              geom = "debug_panel", dbgfun.data = head)
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
@@ -89,7 +89,7 @@ ggplot(my.data, aes(x, y)) +
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
   geom_point() + 
-  stat_debug_group(geom = "debug")
+  stat_debug_group(geom = "debug_panel")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y)) + 
@@ -114,24 +114,24 @@ ggplot(my.data, aes(x, y, shape = group)) +
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
-  stat_debug_panel(summary.fun = "nrow") +
+  stat_debug_panel(dbgfun.data = "nrow") +
   facet_wrap(~block)
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
   geom_point() + 
-  stat_debug_group() +
+  stat_debug_group(dbgfun.data = "nrow") +
   facet_wrap(~block)
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, shape = group)) + 
   geom_point() + 
-  stat_debug_group(geom = "debug")
+  stat_debug_group(geom = "debug_panel")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, shape = group)) + 
   geom_point() + 
-  stat_debug_panel(geom = "debug")
+  stat_debug_panel(geom = "debug_panel")
 
 ## -----------------------------------------------------------------------------
 ggplot(my.data, aes(x, y, colour = group)) + 
@@ -139,5 +139,5 @@ ggplot(my.data, aes(x, y, colour = group)) +
   stat_debug_group(geom = "text",
                    mapping = aes(label = sprintf("group = %i", 
                                                  after_stat(group))),
-                   summary.fun = function(x) {NULL})
+                   dbgfun.data = function(x) {NULL})
 

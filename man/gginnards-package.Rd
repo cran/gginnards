@@ -6,6 +6,8 @@
 \alias{gginnards-package}
 \title{gginnards: Explore the Innards of 'ggplot2' Objects}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Extensions to 'ggplot2' providing low-level debug tools: statistics and geometries echoing their data argument. Layer manipulation: deletion, insertion, extraction and reordering of layers. Deletion of unused variables from the data object embedded in "ggplot" objects.
 }
 \details{
@@ -63,7 +65,7 @@ Package 'ggplot2' source code at \url{https://github.com/tidyverse/ggplot2}
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://www.r4photobiology.info}
+  \item \url{https://docs.r4photobiology.info/gginnards/}
   \item \url{https://github.com/aphalo/gginnards}
   \item Report bugs at \url{https://github.com/aphalo/gginnards/issues}
 }

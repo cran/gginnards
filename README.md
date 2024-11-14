@@ -1,16 +1,18 @@
 
-# gginnards <img src="man/figures/logo-gginnards.png" align="right" width="150" />
+# gginnards <img src="man/figures/logo.png" align="right" width="150" />
 
 <!-- badges: start -->
 
 [![cran
-version](https://www.r-pkg.org/badges/version/gginnards)](https://cran.r-project.org/package=gginnards)
+version](https://www.r-pkg.org/badges/version-last-release/gginnards)](https://cran.r-project.org/package=gginnards)
 [![cran
 checks](https://badges.cranchecks.info/worst/gginnards.svg)](https://cran.r-project.org/web/checks/check_results_gginnards.html)
 [![gginnards status
 badge](https://aphalo.r-universe.dev/badges/gginnards)](https://aphalo.r-universe.dev/gginnards)
 [![R-CMD-check](https://github.com/aphalo/gginnards/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/aphalo/gginnards/actions/workflows/R-CMD-check.yaml)
-<a href="https://docs.r4photobiology.info/gginnards/"><img src="https://img.shields.io/badge/documentation-gginnards-informational.svg" alt="" /></a>
+[![web
+site](https://img.shields.io/badge/documentation-gginnards-informational.svg)](https://docs.r4photobiology.info/gginnards/)
+[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.gginnards-blue.svg)](https://doi.org/10.32614/CRAN.package.gginnards)
 <!-- badges: end -->
 
 ## Purpose
@@ -176,9 +178,9 @@ ggplot(mtcars, aes(cyl, mpg, colour = factor(cyl))) +
 
     #> [1] "PANEL 1; group(s) 1, 2, 3; 'draw_function()' input 'data' (head):"
     #>    colour x group        y     ymin     ymax PANEL flipped_aes orientation
-    #> 1 #F8766D 4     1 26.66364 24.26341 29.21841     1       FALSE          NA
-    #> 2 #00BA38 6     2 19.74286 18.78571 20.65714     1       FALSE          NA
-    #> 3 #619CFF 8     3 15.10000 13.74268 16.37875     1       FALSE          NA
+    #> 1 #F8766D 4     1 26.66364 24.15364 29.11955     1       FALSE          NA
+    #> 2 #00BA38 6     2 19.74286 18.78571 20.72893     1       FALSE          NA
+    #> 3 #619CFF 8     3 15.10000 13.79250 16.32143     1       FALSE          NA
 
 We print to the R console `data` as *seen* as input by statistics that
 use a *panel function*.
@@ -211,9 +213,11 @@ p <-
   num_layers(p)
 #> [1] 2
   which_layers(p, "GeomPoint")
-#> [1] 1
+#> geom_point 
+#>          1
   which_layers(p, "StatSummary")
-#> [1] 2
+#> stat_summary 
+#>            2
 
   p
 ```
@@ -278,8 +282,7 @@ citation("gginnards")
 #> 
 #>   Aphalo P (2024). _gginnards: Explore the Innards of 'ggplot2'
 #>   Objects_. R package version 0.2.0,
-#>   https://github.com/aphalo/gginnards,
-#>   <https://www.r4photobiology.info>.
+#>   <https://CRAN.R-project.org/package=gginnards>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -287,8 +290,8 @@ citation("gginnards")
 #>     title = {gginnards: Explore the Innards of 'ggplot2' Objects},
 #>     author = {Pedro J. Aphalo},
 #>     year = {2024},
-#>     note = {R package version 0.2.0, https://github.com/aphalo/gginnards},
-#>     url = {https://www.r4photobiology.info},
+#>     note = {R package version 0.2.0},
+#>     url = {https://CRAN.R-project.org/package=gginnards},
 #>   }
 ```
 

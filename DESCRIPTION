@@ -1,8 +1,8 @@
 Package: gginnards
 Type: Package
 Title: Explore the Innards of 'ggplot2' Objects
-Version: 0.2.0
-Date: 2024-04-29
+Version: 0.2.0-1
+Date: 2024-11-14
 Authors@R: 
     c(
     person("Pedro J.", "Aphalo", email = "pedro.aphalo@helsinki.fi", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3385-972X"))    )
@@ -19,14 +19,14 @@ Imports: utils, methods, rlang (>= 0.4.0), stringr (>= 1.4.0), magrittr
         (>= 1.5), tibble (>= 2.1.0)
 Suggests: knitr (>= 1.24), rmarkdown (>= 1.14), sf (>= 0.9), pryr (>=
         0.1.4)
-URL: https://www.r4photobiology.info,
+URL: https://docs.r4photobiology.info/gginnards/,
         https://github.com/aphalo/gginnards
 BugReports: https://github.com/aphalo/gginnards/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-05-01 00:34:01 UTC; aphalo
+Packaged: 2024-11-13 23:27:45 UTC; aphalo
 Author: Pedro J. Aphalo [aut, cre] (<https://orcid.org/0000-0003-3385-972X>)
 Repository: CRAN
-Date/Publication: 2024-05-01 08:40:02 UTC
+Date/Publication: 2024-11-14 00:10:02 UTC
